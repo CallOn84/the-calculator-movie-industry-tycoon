@@ -31,6 +31,7 @@
   "messageUpdate1": "Der Rechner ist kompatibel mit der Version",
   "gameVersion": "Patch-Notizen",
   "messageUpdate2": "des Spiels.",
+  "messageFeatPlus": "Zusätzliche Produktionsressourcen können je nach Genreanwendung variieren. Die grün hervorgehobenen Elemente weisen auf ein höheres Sicherheitsniveau in der Produktion hin. Allerdings gilt: Je höher das Budget, desto größer das Risiko!",
   "nextFeatureMessage": "Neue Funktionen kommen bald:",
   "nextFeature": "Premium-Ressourcenvorschläge für Produktion und Post-Produktion",
   "newTab": "(öffnet in neuem Tab)",

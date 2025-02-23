@@ -31,6 +31,7 @@
   "messageUpdate1": "La calculadora es compatible con la versión",
   "gameVersion": "Notas de parche",
   "messageUpdate2": "del juego.",
+  "messageFeatPlus": "Los recursos extra de producción pueden variar según la aplicación del género. Los elementos resaltados en verde indican un mayor nivel de seguridad para la producción. Sin embargo, cuanto mayor sea el presupuesto, mayor será el riesgo involucrado.",
   "nextFeatureMessage": "Próximamente novedades:",
   "nextFeature": "Sugerencia de recursos premium para Producción y Post-Producción",
   "newTab": "(abre en nueva pestaña)",

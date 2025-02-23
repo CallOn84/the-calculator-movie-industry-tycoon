@@ -11,6 +11,7 @@ const Disclaimer: React.FC = () => {
   return (
     <footer className="mt-16 py-2 px-4 text-center text-xs text-gray-500 dark:text-gray-400">
       <p>
+        {t.messageFeatPlus}{' '}
         {t.disclaimerPrefix}{' '}
         <a
           href="https://store.steampowered.com/app/2315430/The_Executive__Movie_Industry_Tycoon/"
@@ -21,7 +22,7 @@ const Disclaimer: React.FC = () => {
         >
           {t.gameTitle}
         </a>{' '}
-        {t.disclaimerPrefix}{" "}
+        {t.disclaimerPrefix}{' '}
         <Link
           href="/privacy-policy"
           aria-label={t.privacyPolicyLink}

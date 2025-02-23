@@ -31,6 +31,7 @@
   "messageUpdate1": "Hesap makinesi, sürüm ile uyumludur",
   "gameVersion": "Yama notları",
   "messageUpdate2": "oyunun",
+  "messageFeatPlus": "Ekstra prodüksiyon kaynakları, türün uygulanmasına bağlı olarak değişebilir. Yeşil ile vurgulanan öğeler, daha yüksek bir prodüksiyon güvenlik seviyesini gösterir. Ancak bütçe ne kadar yüksek olursa, risk de o kadar büyük olur!",
   "nextFeatureMessage": "Yakında gelecek yenilikler:",
   "nextFeature": "Prodüksiyon ve Post-prodüksiyon için Premium Kaynak Önerileri",
   "newTab": "(yeni sekmede açar)",

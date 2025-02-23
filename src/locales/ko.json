@@ -31,6 +31,7 @@
   "messageUpdate1": "이 계산기는 버전과 호환됩니다",
   "gameVersion": "패치 노트",
   "messageUpdate2": "게임의",
+  "messageFeatPlus": "제작 추가 리소스는 장르 적용에 따라 달라질 수 있습니다. 녹색으로 강조된 요소는 더 높은 수준의 제작 안전을 나타냅니다. 그러나 예산이 클수록 위험도 커집니다!",
   "nextFeatureMessage": "곧 출시될 새로운 기능:",
   "nextFeature": "제작 및 후반 작업을 위한 프리미엄 리소스 제안",
   "newTab": "(새 탭에서 열림)",

@@ -129,7 +129,7 @@ const ProductionResult: React.FC<ProductionResultProps> = ({ production, postPro
             {value}
           </div>
         </div>
-        
+
         <div className="border-t border-gray-200 dark:border-gray-700 w-full mt-2"></div>
 
         {/* Recursos Extras associados */}
@@ -182,7 +182,7 @@ const ProductionResult: React.FC<ProductionResultProps> = ({ production, postPro
       </h2>
 
       <div className="mb-4">
-        <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">{t.productionLabel}</h3>
+        <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200 text-center">{t.productionLabel}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {renderSliderCard(t.writing, production.writing, "slider-writing", "writing", true)}
           {renderSliderCard(t.costume, production.costume, "slider-costume", "costume", true)}
@@ -191,7 +191,7 @@ const ProductionResult: React.FC<ProductionResultProps> = ({ production, postPro
       </div>
 
       <div>
-        <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">{t.postProductionLabel}</h3>
+        <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200 text-center">{t.postProductionLabel}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {renderSliderCard(t.specialeffect, postProduction.specialeffect, "slider-specialeffect", "specialeffect", false)}
           {renderSliderCard(t.sound, postProduction.sound, "slider-sound", "sound", false)}
