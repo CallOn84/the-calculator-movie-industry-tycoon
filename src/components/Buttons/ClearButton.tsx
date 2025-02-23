@@ -13,7 +13,7 @@ const ClearButton: React.FC<ClearButtonProps> = ({ onClear, label, testId }) => 
   return (
     <button
       onClick={onClear}
-      className="w-full flex items-center justify-center gap-2 mb-4 px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors duration-200"
+      className="w-full flex items-center justify-center gap-2 mb-4 px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
       data-testid={testId}
     >
       <svg

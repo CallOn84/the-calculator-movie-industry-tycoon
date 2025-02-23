@@ -30,6 +30,8 @@
 │   │   │   ├── AffinityCalculator.tsx
 │   │   │   ├── AffinityResult.tsx
 │   │   │   ├── BaseScoreResult.tsx
+│   │   │   ├── ExtraResources.tsx
+│   │   │   ├── ProductionResult.tsx
 │   │   │   └── SeasonalResults.tsx
 │   │   ├── Footer.tsx
 │   │   ├── GitHubLink.tsx
@@ -48,6 +50,7 @@
 │   │   │   └── WorldCupIcon.tsx
 │   │   ├── Inputs
 │   │   │   ├── AgeRatingRadio.tsx
+│   │   │   ├── BudgetRadio.tsx
 │   │   │   ├── GenresInput.tsx
 │   │   │   └── SelectInput.tsx
 │   │   ├── LanguageSelector.tsx
@@ -60,6 +63,7 @@
 │   │   ├── LanguageContext.tsx
 │   │   └── ThemeContext.tsx
 │   ├── data
+│   │   ├── Features.json
 │   │   ├── genre.json
 │   │   ├── index.ts
 │   │   ├── planning.json
@@ -69,6 +73,8 @@
 │   │   └── theme.json
 │   ├── hooks
 │   │   ├── useCalculateAffinity.ts
+│   │   ├── useCalculateExtraResources.ts
+│   │   ├── useCalculateProduction.ts
 │   │   ├── useFormTracking.ts
 │   │   └── useGtag.ts
 │   ├── locales
@@ -83,10 +89,11 @@
 │   │   ├── zh-CN.json
 │   │   └── zh-TW.json
 │   ├── types
+│   │   ├── features.ts
 │   │   └── globals.d.ts
 │   └── utils
 │       └── affinityCalculations.ts
 ├── tailwind.config.ts
 └── tsconfig.json
 
-19 directories, 71 files
+19 directories, 78 files

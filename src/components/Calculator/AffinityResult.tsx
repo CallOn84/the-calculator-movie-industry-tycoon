@@ -6,6 +6,8 @@ import { useLanguage } from "@/context/LanguageContext";
 import BaseScoreResult from "./BaseScoreResult";
 import SeasonalResults from "./SeasonalResults";
 import ProductionResult from "./ProductionResult";
+import ExtraResources from "./ExtraResources";
+import { ExtraResource } from "@/types/extraResources"; // ✅ Importação correta
 
 export type SeasonResult = {
   season: string;
@@ -25,6 +27,11 @@ type PostProductionProps = {
   editing: number;
 };
 
+type ExtraResourcesType = {
+  productionExtras: ExtraResource[];
+  postProductionExtras: ExtraResource[];
+};
+
 type AffinityResultProps = {
   result: number | null;
   loading: boolean;
@@ -33,9 +40,9 @@ type AffinityResultProps = {
   theme: string;
   rating: string;
   seasonResults: SeasonResult[];
-  // Planejamento de Produção e Pós-Produção
   production: ProductionProps | null;
   postProduction: PostProductionProps | null;
+  extraResources: ExtraResourcesType;
 };
 
 const AffinityResult: React.FC<AffinityResultProps> = ({
@@ -48,6 +55,7 @@ const AffinityResult: React.FC<AffinityResultProps> = ({
   seasonResults,
   production,
   postProduction,
+  extraResources,
 }) => {
   const { translations: t } = useLanguage();
 
@@ -79,9 +87,12 @@ const AffinityResult: React.FC<AffinityResultProps> = ({
         rating={rating}
       />
 
-      {/* Exibe planejamento se os dados existirem */}
       {production && postProduction && (
-        <ProductionResult production={production} postProduction={postProduction} />
+        <ProductionResult
+          production={production}
+          postProduction={postProduction}
+          extraResources={extraResources}
+        />
       )}
 
       <SeasonalResults seasonResults={seasonResults} />

@@ -24,7 +24,7 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
   const { translations: t } = useLanguage();
 
   const getTranslatedSeason = (season: string): string => {
-    return (t as Record<string, string>)[`SEASON_${season}`] || season;
+    return (t as unknown as Record<string, string>)[`SEASON_${season}`] || season;
   };
 
   const getSeasonIcon = (season: string) => {
@@ -58,13 +58,13 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
 
   const getScoreBgColor = (label: string): string => {
     switch (label.toLowerCase()) {
-      case t.bad.toLowerCase():
+      case (t as unknown as Record<string, string>).bad.toLowerCase():
         return "bg-red-500";
-      case t.medium.toLowerCase():
+      case (t as unknown as Record<string, string>).medium.toLowerCase():
         return "bg-yellow-400";
-      case t.good.toLowerCase():
+      case (t as unknown as Record<string, string>).good.toLowerCase():
         return "bg-blue-500";
-      case t.great.toLowerCase():
+      case (t as unknown as Record<string, string>).great.toLowerCase():
         return "bg-green-500";
       default:
         return "bg-gray-300";
@@ -72,7 +72,7 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
   };
 
   const getTextColor = (label: string): string => {
-    return label.toLowerCase() === t.medium.toLowerCase() ? "text-gray-900" : "text-white";
+    return label.toLowerCase() === (t as unknown as Record<string, string>).medium.toLowerCase() ? "text-gray-900" : "text-white";
   };
 
   return (
@@ -93,6 +93,7 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
             <span className={`text-l font-bold my-2 py-1 px-2 rounded ${getScoreBgColor(label)} ${getTextColor(label)}`}>
               {label}
             </span>
+            <div className="border-t border-gray-200 dark:border-gray-700 w-full my-1"></div>
             <span className="text-xs font-medium text-gray-400 dark:text-gray-500">
               Score: {score}
             </span>
