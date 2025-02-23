@@ -36,7 +36,7 @@ const LanguageSelector = () => {
   return (
     <Select.Root value={locale} onValueChange={handleLanguageChange}>
       <Select.Trigger
-        className="inline-flex items-center justify-between px-3 py-2 text-sm bg-white dark:bg-formBackgroundDark rounded-md border border-gray-300 dark:border-formBorderDark hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        className="inline-flex items-center justify-between px-3 py-2 text-sm bg-white dark:bg-formBackgroundDark rounded-md border border-gray-300 dark:border-formBorderDark hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
         aria-label="Seletor de idiomas"
       >
         <Select.Value>
@@ -60,7 +60,7 @@ const LanguageSelector = () => {
               <Select.Item
                 key={lang.code}
                 value={lang.code}
-                className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer relative pr-8"
+                className="flex items-center px-3 py-2 relative pr-8 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
               >
                 <Select.ItemText>{lang.label}</Select.ItemText>
                 <Select.ItemIndicator className="absolute right-1">

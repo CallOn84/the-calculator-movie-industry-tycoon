@@ -8,38 +8,47 @@ import AffinityResult from "./AffinityResult";
 import AgeRatingRadio from "@/components/Inputs/AgeRatingRadio";
 import GenresInput from "@/components/Inputs/GenresInput";
 import ClearButton from "@/components/Buttons/ClearButton";
+import BudgetRadio from "@/components/Inputs/BudgetRadio";
 import useFormTracking from "@/hooks/useFormTracking";
 import { useGtag } from "@/hooks/useGtag";
 import { useCalculateAffinity } from "@/hooks/useCalculateAffinity";
 import { useCalculateProduction } from "@/hooks/useCalculateProduction";
+import { useCalculateExtraResources } from "@/hooks/useCalculateExtraResources";
 import affinities from "@/data";
 import { getThemeScores, getAffinityLabel, calculateGenreScores } from "@/utils/affinityCalculations";
+
+const budgetOptions = [
+  { value: "Pequeno", label: "Pequeno" },
+  { value: "Moderado", label: "Moderado" },
+  { value: "Grande", label: "Grande" },
+  { value: "Blockbuster", label: "Blockbuster" }
+];
 
 const AffinityCalculator: React.FC = () => {
   const { translations: t, locale } = useLanguage();
   const { safeGtag } = useGtag();
+
+  // 🔹 Função auxiliar para obter traduções de forma segura
+  const getTranslation = (key: string): string =>
+    (t as unknown as Record<string, string>)[key] || key;
 
   const [genres] = useState<string[]>(affinities.genreRelations.header);
   const [genre1, setGenre1] = useState("");
   const [genre2, setGenre2] = useState("");
   const [theme, setTheme] = useState("");
   const [rating, setRating] = useState("");
+  const [budget, setBudget] = useState("");
   const [formStartTime, setFormStartTime] = useState(0);
   const [filledFields, setFilledFields] = useState<Set<string>>(new Set());
 
+  // 🔹 Opções de classificação etária com tradução acessível
   const ratingsOptions = Object.keys(affinities.ratingImpact.items).map((ratingKey) => ({
     value: ratingKey,
-    label:
-      (t as Record<string, string>)[`RATING_${ratingKey.replace("-", "_").toUpperCase()}`] ||
-      ratingKey,
+    label: getTranslation(`RATING_${ratingKey.replace("-", "_").toUpperCase()}`) || ratingKey,
   }));
 
-  const [genresOptions1, setGenresOptions1] = useState<
-    { genre: string; score: number; label: string }[]
-  >([]);
-  const [genresOptions2, setGenresOptions2] = useState<
-    { genre: string; score: number; label: string }[]
-  >([]);
+  const [genresOptions1, setGenresOptions1] = useState<{ genre: string; score: number; label: string }[]>([]);
+  const [genresOptions2, setGenresOptions2] = useState<{ genre: string; score: number; label: string }[]>([]);
 
   useFormTracking({ filledFields, formName: "affinity_calculator", delay: 15000 });
 
@@ -48,34 +57,32 @@ const AffinityCalculator: React.FC = () => {
     genre2,
     theme,
     rating,
+    budget,
     genres,
-    translations: t,
+    translations: t as unknown as Record<string, string>,
     locale,
     formStartTime,
     filledFields,
     safeGtag,
   });
 
-  // Chama o hook de produção e pós-produção e lê seus valores
   const { production, postProduction } = useCalculateProduction(genre1, genre2);
+  const extraResources = useCalculateExtraResources(production, postProduction, budget, theme);
 
-  // Atualiza as opções de gênero dinamicamente
   useEffect(() => {
     if (theme) {
       const themeScores = getThemeScores(
         theme,
         affinities,
         genres,
-        (score: number) => getAffinityLabel(score, t as Record<string, string>)
+        (score: number) => getAffinityLabel(score, t as unknown as Record<string, string>)
       );
 
       if (!genre2) {
         setGenresOptions1([...themeScores].sort((a, b) => b.score - a.score));
       } else {
         setGenresOptions1(
-          themeScores
-            .filter((item: { genre: string }) => item.genre !== genre2)
-            .sort((a, b) => b.score - a.score)
+          themeScores.filter((item) => item.genre !== genre2).sort((a, b) => b.score - a.score)
         );
       }
 
@@ -85,31 +92,27 @@ const AffinityCalculator: React.FC = () => {
           themeScores,
           affinities,
           genres,
-          (score: number) => getAffinityLabel(score, t as Record<string, string>)
+          (score: number) => getAffinityLabel(score, t as unknown as Record<string, string>)
         );
         setGenresOptions2(
-          combinedScores
-            .filter((item: { genre: string }) => item.genre !== genre1)
-            .sort((a, b) => b.score - a.score)
+          combinedScores.filter((item) => item.genre !== genre1).sort((a, b) => b.score - a.score)
         );
       } else {
         setGenresOptions2([...themeScores].sort((a, b) => b.score - a.score));
       }
     } else {
-      setGenresOptions1(
-        affinities.genreRelations.header.map((genre) => ({ genre, score: 0, label: "" }))
-      );
-      setGenresOptions2(
-        affinities.genreRelations.header.map((genre) => ({ genre, score: 0, label: "" }))
-      );
+      setGenresOptions1(affinities.genreRelations.header.map((genre) => ({ genre, score: 0, label: "" })));
+      setGenresOptions2(affinities.genreRelations.header.map((genre) => ({ genre, score: 0, label: "" })));
     }
   }, [theme, genre1, genre2, genres, t]);
 
+  // 🔹 Limpa todos os campos e reinicia o formulário
   const handleClearAll = () => {
     setGenre1("");
     setGenre2("");
     setTheme("");
     setRating("");
+    setBudget("");
     setFilledFields(new Set());
     setFormStartTime(0);
     safeGtag("form_reset", {
@@ -120,19 +123,16 @@ const AffinityCalculator: React.FC = () => {
 
   return (
     <div className="affinity-form-container flex flex-col gap-6 w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl">
-      <h2 className="text-l font-bold text-center text-gray-800 dark:text-gray-100 mb-4">
-        {t.subtitle}
-      </h2>
+      <h2 className="text-l font-bold text-center text-gray-800 dark:text-gray-100 mb-4">{t.subtitle}</h2>
 
       <div className="flex flex-col gap-4">
+        {/* 🔹 Seletor de tema acessível */}
         <SelectInput
           name="theme"
           label={t.theme}
           options={Object.keys(affinities.thematicRelations.items).sort((a, b) => {
-            // Função auxiliar para obter a tradução do tema usando toLowerCase
             const getThemeLabel = (key: string): string =>
-              ((t as Record<string, string>)[`THEME_${key.toLowerCase()}`] || key).toLowerCase();
-
+              (getTranslation(`THEME_${key.toLowerCase()}`) || key).toLowerCase();
             return getThemeLabel(a).localeCompare(getThemeLabel(b));
           })}
           value={theme}
@@ -140,32 +140,19 @@ const AffinityCalculator: React.FC = () => {
           required
         />
 
+        {/* 🔹 Seletor de gêneros */}
         <div className="grid md:grid-cols-2 gap-4">
-          <GenresInput
-            name="genre1"
-            label={t.genre1}
-            options={genresOptions1}
-            value={genre1}
-            onChange={(value) => setGenre1(value)}
-          />
-
-          <GenresInput
-            name="genre2"
-            label={t.genre2}
-            options={genresOptions2}
-            value={genre2}
-            onChange={(value) => setGenre2(value)}
-            isOptional
-          />
+          <GenresInput name="genre1" label={t.genre1} options={genresOptions1} value={genre1} onChange={(value) => setGenre1(value)} />
+          <GenresInput name="genre2" label={t.genre2} options={genresOptions2} value={genre2} onChange={(value) => setGenre2(value)} isOptional />
         </div>
 
-        <AgeRatingRadio
-          label={t.rating}
-          options={ratingsOptions}
-          selectedValue={rating}
-          onChange={(value) => setRating(value)}
-        />
+        {/* 🔹 Seletor de classificação etária */}
+        <AgeRatingRadio label={t.rating} options={ratingsOptions} selectedValue={rating} onChange={(value) => setRating(value)} />
 
+        {/* 🔹 Seletor de orçamento */}
+        <BudgetRadio label={t.budget || "Orçamento"} selectedValue={budget} onChange={(value) => setBudget(value)} />
+
+        {/* 🔹 Botão de limpeza */}
         {result !== null && (
           <div className="result-actions pt-4">
             <ClearButton onClear={handleClearAll} label={t.clearAll} testId="clear-all-button" />
@@ -173,6 +160,7 @@ const AffinityCalculator: React.FC = () => {
           </div>
         )}
 
+        {/* 🔹 Exibição dos resultados */}
         <AffinityResult
           result={result}
           loading={loading}
@@ -183,6 +171,7 @@ const AffinityCalculator: React.FC = () => {
           seasonResults={seasonResults}
           production={production}
           postProduction={postProduction}
+          extraResources={extraResources}
         />
       </div>
     </div>

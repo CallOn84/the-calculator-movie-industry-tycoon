@@ -12,7 +12,7 @@ const GitHubLink: React.FC = () => {
         href="https://github.com/ooVictorFranco/the-calculator-movie-industry-tycoon"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+        className="flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
         aria-label={`${t.viewOnGithub}, ${t.newTab}`}
       >
         <svg

@@ -33,9 +33,10 @@ const BaseScoreResult: React.FC<BaseScoreResultProps> = ({
 }) => {
   const { translations: t } = useLanguage();
 
-  const getTranslatedTerm = (prefix: 'GENRE' | 'THEME', term: string): string => {
+  // Função auxiliar para obter traduções, convertendo t para Record<string, string>
+  const getTranslatedTerm = (prefix: "GENRE" | "THEME", term: string): string => {
     const key = `${prefix}_${term}`;
-    return (t as Record<string, string>)[key] || term;
+    return (t as unknown as Record<string, string>)[key] || term;
   };
 
   const getAffinityLabel = (score: number): string => {
@@ -45,7 +46,10 @@ const BaseScoreResult: React.FC<BaseScoreResultProps> = ({
     return t.great;
   };
 
-  const renderTranslatedMessage = (message: string, values: { [key: string]: string }) => {
+  const renderTranslatedMessage = (
+    message: string,
+    values: { [key: string]: string }
+  ) => {
     const regex = /\[([^\]]+)\]/g;
     const parts = message.split(regex);
     return parts.map((part, index) =>
@@ -53,7 +57,10 @@ const BaseScoreResult: React.FC<BaseScoreResultProps> = ({
     );
   };
 
-  const translatedRating = (t as Record<string, string>)[`RATING_${rating.replace('-', '_').toUpperCase()}`] || rating;
+  const translatedRating =
+    (t as unknown as Record<string, string>)[
+    `RATING_${rating.replace("-", "_").toUpperCase()}`
+    ] || rating;
 
   return (
     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 text-center">
@@ -61,14 +68,18 @@ const BaseScoreResult: React.FC<BaseScoreResultProps> = ({
         {renderTranslatedMessage(
           genre2 ? t.resultMessageTwoGenres : t.resultMessageOneGenre,
           {
-            genre1: getTranslatedTerm('GENRE', genre1),
-            genre2: genre2 ? getTranslatedTerm('GENRE', genre2) : "",
-            theme: getTranslatedTerm('THEME', theme),
-            rating: translatedRating
+            genre1: getTranslatedTerm("GENRE", genre1),
+            genre2: genre2 ? getTranslatedTerm("GENRE", genre2) : "",
+            theme: getTranslatedTerm("THEME", theme),
+            rating: translatedRating,
           }
         )}
       </p>
-      <span className={`text-xl px-2 py-1 rounded ${getScoreBgColor(result)} ${getTextColor(result)}`}>
+      <span
+        className={`text-xl px-2 py-1 rounded ${getScoreBgColor(
+          result
+        )} ${getTextColor(result)}`}
+      >
         <strong>{getAffinityLabel(result)}</strong>{" "}
         <span className="text-xs">(Score: {result.toFixed(2)})</span>
       </span>

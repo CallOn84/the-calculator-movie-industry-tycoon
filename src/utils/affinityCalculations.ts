@@ -33,8 +33,7 @@ export const getAffinityLabel = (
   if (score < 0.5) return translations.bad;
   if (score < 1.5) return translations.medium;
   if (score < 2.5) return translations.good;
-  if (score >= 2.5) return translations.great;
-  return translations.noResult;
+  return translations.great;
 };
 
 /**

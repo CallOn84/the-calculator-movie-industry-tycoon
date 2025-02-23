@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://the-calculator-movie-industry-tycoon.vercel.app/sitemap.xml
+Sitemap: https://www.calcmovietycoon.com/sitemap.xml
