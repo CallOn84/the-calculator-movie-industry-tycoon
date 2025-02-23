@@ -123,10 +123,15 @@ const AffinityCalculator: React.FC = () => {
 
   return (
     <div className="affinity-form-container flex flex-col gap-6 w-full max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-xl">
-      <h2 className="text-l font-bold text-center text-gray-800 dark:text-gray-100 mb-4">{t.subtitle}</h2>
+      <h2 className="text-l font-bold text-center text-gray-800 dark:text-gray-100">{t.subtitle}</h2>
 
       <div className="flex flex-col gap-4">
-        {/* 🔹 Seletor de tema acessível */}
+        {/* Seletor de orçamento */}
+        <BudgetRadio label={t.budget || "Orçamento"} selectedValue={budget} onChange={(value) => setBudget(value)} />
+
+        <div className="border-t border-gray-300 dark:border-gray-600 w-full"></div>
+
+        {/* Seletor de tema acessível */}
         <SelectInput
           name="theme"
           label={t.theme}
@@ -140,19 +145,18 @@ const AffinityCalculator: React.FC = () => {
           required
         />
 
-        {/* 🔹 Seletor de gêneros */}
+        {/* Seletor de gêneros */}
         <div className="grid md:grid-cols-2 gap-4">
           <GenresInput name="genre1" label={t.genre1} options={genresOptions1} value={genre1} onChange={(value) => setGenre1(value)} />
           <GenresInput name="genre2" label={t.genre2} options={genresOptions2} value={genre2} onChange={(value) => setGenre2(value)} isOptional />
         </div>
 
-        {/* 🔹 Seletor de classificação etária */}
+        <div className="border-t border-gray-300 dark:border-gray-600 w-full"></div>
+
+        {/* Seletor de classificação etária */}
         <AgeRatingRadio label={t.rating} options={ratingsOptions} selectedValue={rating} onChange={(value) => setRating(value)} />
 
-        {/* 🔹 Seletor de orçamento */}
-        <BudgetRadio label={t.budget || "Orçamento"} selectedValue={budget} onChange={(value) => setBudget(value)} />
-
-        {/* 🔹 Botão de limpeza */}
+        {/* Botão de limpeza */}
         {result !== null && (
           <div className="result-actions pt-4">
             <ClearButton onClear={handleClearAll} label={t.clearAll} testId="clear-all-button" />
@@ -160,7 +164,7 @@ const AffinityCalculator: React.FC = () => {
           </div>
         )}
 
-        {/* 🔹 Exibição dos resultados */}
+        {/* Exibição dos resultados */}
         <AffinityResult
           result={result}
           loading={loading}

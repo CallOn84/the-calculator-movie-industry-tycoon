@@ -21,7 +21,6 @@ export const useCalculateExtraResources = (
       return;
     }
 
-    //Mapeia os budgets para os valores internos usados no JSON
     const budgetMap: Record<string, "small" | "medium" | "large" | "blockbuster"> = {
       "Small": "small",
       "Moderate": "medium",
@@ -34,37 +33,15 @@ export const useCalculateExtraResources = (
     const complexityReqs = features.features["complexity-req"];
     const budgetComplexity = complexityReqs[budgetKey];
 
-    //Definição do nível de afinidade permitido por budget
-    const affinityFilter: Record<string, number[]> = {
-      small: [3],             // Apenas afinidade 3
-      medium: [2, 3],         // Afinidade 2 e 3
-      large: [2, 3],          // Afinidade 2 e 3
-      blockbuster: [1, 2, 3], // Afinidade 1, 2 e 3
-    };
-
-    //Número mínimo de recursos recomendados por budget
-    const minResourcesRequired: Record<string, number> = {
-      small: 1,
-      medium: 5,
-      large: 10,
-      blockbuster: 15,
-    };
-
     const records = features.features.records;
     const sets = features.features.sets;
 
-    let productionExtras: ExtraResource[] = [];
-    let postProductionExtras: ExtraResource[] = [];
+    const productionExtras: ExtraResource[] = [];
+    const postProductionExtras: ExtraResource[] = [];
 
     for (const [id, extra] of Object.entries(records)) {
       const parent = sets[extra["set-id"]];
       if (!parent) continue;
-
-      //Obtém o nível de afinidade com o tema
-      const affinityLevel = extra["theme-affinity"]?.[selectedTheme] ?? 0;
-
-      //Aplica o filtro de afinidade de acordo com o budget
-      if (!affinityFilter[budgetKey].includes(affinityLevel)) continue;
 
       let meetsPlanning = false;
       if (parent.category === "pre-production") {
@@ -89,8 +66,16 @@ export const useCalculateExtraResources = (
         }
       }
 
-      //Filtra pela complexidade do orçamento e requisitos de planejamento
-      if (meetsPlanning && extra.complexity <= budgetComplexity) {
+      const affinityLevel = extra["theme-affinity"]?.[selectedTheme] ?? 0;
+
+      // 🔹 Define quais afinidades podem ser exibidas para cada orçamento
+      const canBeDisplayed =
+        affinityLevel === 3 ||
+        (affinityLevel === 2 && budgetKey !== "small") ||
+        (affinityLevel === 1 && (budgetKey === "large" || budgetKey === "blockbuster")) ||
+        (affinityLevel === 0 && budgetKey === "blockbuster");
+
+      if (meetsPlanning && canBeDisplayed) {
         const extraResource: ExtraResource = {
           id,
           nameKey: extra["name-key"],
@@ -100,7 +85,7 @@ export const useCalculateExtraResources = (
           complexity: extra.complexity,
           planningReqs: extra["planning-reqs"],
           sortPriority: parent["sort-priority"],
-          affinityLevel,
+          affinityLevel, // ✅ Agora armazenamos corretamente a afinidade
         };
 
         if (parent.category === "pre-production") {
@@ -111,40 +96,9 @@ export const useCalculateExtraResources = (
       }
     }
 
-    //Ordena os recursos por afinidade e prioridade
-    productionExtras.sort((a, b) => b.affinityLevel - a.affinityLevel || a.sortPriority - b.sortPriority);
-    postProductionExtras.sort((a, b) => b.affinityLevel - a.affinityLevel || a.sortPriority - b.sortPriority);
-
-    //Garante que pelo menos o número mínimo de recursos seja recomendado
-    function ensureMinResources(resources: ExtraResource[], minCount: number) {
-      while (resources.length < minCount) {
-        // Encontra recursos adicionais elegíveis
-        const additionalResources = Object.values(records)
-          .filter(extra => {
-            const affinity = extra["theme-affinity"]?.[selectedTheme] ?? 0;
-            return !resources.find(r => r.nameKey === extra["name-key"]) &&
-              affinity > 0 && extra.complexity <= budgetComplexity;
-          })
-          .map(extra => ({
-            id: extra["name-key"],
-            nameKey: extra["name-key"],
-            setId: extra["set-id"],
-            category: sets[extra["set-id"]].category,
-            cost: extra.cost || {},
-            complexity: extra.complexity,
-            planningReqs: extra["planning-reqs"],
-            sortPriority: sets[extra["set-id"]]["sort-priority"],
-            affinityLevel: extra["theme-affinity"]?.[selectedTheme] ?? 0,
-          }));
-
-        // Adiciona recursos até atingir o mínimo exigido
-        resources.push(...additionalResources.slice(0, minCount - resources.length));
-      }
-      return resources;
-    }
-
-    productionExtras = ensureMinResources(productionExtras, minResourcesRequired[budgetKey]);
-    postProductionExtras = ensureMinResources(postProductionExtras, minResourcesRequired[budgetKey]);
+    // Ordena os recursos extras por maior afinidade dentro do mesmo `set-id`
+    productionExtras.sort((a, b) => b.affinityLevel - a.affinityLevel);
+    postProductionExtras.sort((a, b) => b.affinityLevel - a.affinityLevel);
 
     setResult({ productionExtras, postProductionExtras });
   }, [production, postProduction, filmBudget, selectedTheme]);
