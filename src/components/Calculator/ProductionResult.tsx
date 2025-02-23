@@ -129,6 +129,8 @@ const ProductionResult: React.FC<ProductionResultProps> = ({ production, postPro
             {value}
           </div>
         </div>
+        
+        <div className="border-t border-gray-200 dark:border-gray-700 w-full mt-2"></div>
 
         {/* Recursos Extras associados */}
         {Object.keys(groupedExtras).length > 0 && (

@@ -93,6 +93,7 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
             <span className={`text-l font-bold my-2 py-1 px-2 rounded ${getScoreBgColor(label)} ${getTextColor(label)}`}>
               {label}
             </span>
+            <div className="border-t border-gray-200 dark:border-gray-700 w-full my-1"></div>
             <span className="text-xs font-medium text-gray-400 dark:text-gray-500">
               Score: {score}
             </span>
