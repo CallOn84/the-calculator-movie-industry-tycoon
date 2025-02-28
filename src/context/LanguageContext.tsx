@@ -88,3 +88,5 @@ export const useLanguage = () => {
   }
   return context;
 };
+
+/* en, pt, fr, de, es, ja, ko, zh-CN, zh-TW e tr */
