@@ -33,7 +33,7 @@
   "messageUpdate2": "oyunun",
   "messageFeatPlus": "Ekstra prodüksiyon kaynakları, türün uygulanmasına bağlı olarak değişebilir. Yeşil ile vurgulanan öğeler, daha yüksek bir prodüksiyon güvenlik seviyesini gösterir. Ancak bütçe ne kadar yüksek olursa, risk de o kadar büyük olur!",
   "nextFeatureMessage": "Yakında gelecek yenilikler:",
-  "nextFeature": "Prodüksiyon ve Post-prodüksiyon için Premium Kaynak Önerileri",
+  "nextFeature": "Tema ve türe göre film isimleri öneren buton.",
   "newTab": "(yeni sekmede açar)",
   "GENRE_action": "Aksiyon",
   "GENRE_adventure": "Macera",

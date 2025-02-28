@@ -33,7 +33,7 @@
   "messageUpdate2": "du jeu.",
   "messageFeatPlus": "Les ressources supplémentaires de production peuvent varier en fonction de l’application du genre. Les éléments mis en évidence en vert indiquent un niveau de sécurité plus élevé pour la production. Cependant, plus le budget est élevé, plus le risque est grand !",
   "nextFeatureMessage": "Nouveautés à venir bientôt :",
-  "nextFeature": "Suggestions de ressources Premium pour la Production et la Post-production",
+  "nextFeature": "Bouton qui suggère des titres de films en fonction du thème et du genre.",
   "newTab": "(s'ouvre dans un nouvel onglet)",
   "GENRE_action": "Action",
   "GENRE_adventure": "Aventure",
