@@ -14,7 +14,7 @@ export default function Home() {
       <AffinityCalculator />
       <div className="mt-8 p-4 text-center text-sm text-gray-600 dark:text-gray-300 w-full max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md">
         <p>{t.nextFeatureMessage}</p>
-        <p className="font-bold mt-2 text-sky-700 dark:text-sky-500 py-1 px-2 rounded border border-sky-300 bg-sky-100 dark:border-sky-300/10 dark:bg-sky-400/10 md:w-4/5 mx-auto">
+        <p className="font-bold mt-2 text-emerald-700 dark:text-emerald-500 py-1 px-2 rounded border border-emerald-300 bg-emerald-100 dark:border-emerald-300/10 dark:bg-emerald-400/10 md:w-4/5 mx-auto">
           {t.nextFeature}
         </p>
       </div>
