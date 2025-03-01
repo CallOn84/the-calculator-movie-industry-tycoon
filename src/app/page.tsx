@@ -3,7 +3,6 @@
 import { useLanguage } from "@/context/LanguageContext";
 import AffinityCalculator from "@/components/Calculator/AffinityCalculator";
 import Script from "next/script";
-import DonateButton from "@/components/Buttons/DonateButton";
 
 export default function Home() {
   const { translations: t } = useLanguage();
@@ -33,7 +32,7 @@ export default function Home() {
       </p>
       
       {/* Botão de Doação do PayPal */}
-      <DonateButton />
+      
 
       <Script
         id="structured-data"
