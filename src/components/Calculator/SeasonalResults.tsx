@@ -59,20 +59,20 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
   const getScoreBgColor = (label: string): string => {
     switch (label.toLowerCase()) {
       case (t as unknown as Record<string, string>).bad.toLowerCase():
-        return "bg-red-500";
+        return "bg-red-200 text-red-900 dark:bg-red-300 dark:text-red-900";
       case (t as unknown as Record<string, string>).medium.toLowerCase():
-        return "bg-yellow-400";
+        return "bg-yellow-200 text-yellow-900 dark:bg-yellow-300 dark:text-yellow-900";
       case (t as unknown as Record<string, string>).good.toLowerCase():
-        return "bg-blue-500";
+        return "bg-blue-200 text-blue-900 dark:bg-blue-300 dark:text-blue-900";
       case (t as unknown as Record<string, string>).great.toLowerCase():
-        return "bg-green-500";
+        return "bg-green-200 text-green-900 dark:bg-green-300 dark:text-green-900";
       default:
-        return "bg-gray-300";
+        return "bg-gray-900 dark:bg-gray-300";
     }
   };
 
   const getTextColor = (label: string): string => {
-    return label.toLowerCase() === (t as unknown as Record<string, string>).medium.toLowerCase() ? "text-gray-900" : "text-white";
+    return label.toLowerCase() === (t as unknown as Record<string, string>).medium.toLowerCase() ? "" : "";
   };
 
   return (
@@ -90,7 +90,7 @@ const SeasonalResults: React.FC<SeasonalResultsProps> = ({ seasonResults }) => {
             <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
               {getTranslatedSeason(season)}
             </span>
-            <span className={`text-l font-bold my-2 py-1 px-2 rounded ${getScoreBgColor(label)} ${getTextColor(label)}`}>
+            <span className={`text-l font-medium my-2 py-1 px-2 rounded ${getScoreBgColor(label)} ${getTextColor(label)}`}>
               {label}
             </span>
             <div className="border-t border-gray-200 dark:border-gray-700 w-full my-1"></div>

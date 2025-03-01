@@ -25,7 +25,8 @@
 │   │       └── page.tsx
 │   ├── components
 │   │   ├── Buttons
-│   │   │   └── ClearButton.tsx
+│   │   │   ├── ClearButton.tsx
+│   │   │   └── DonateButton.tsx
 │   │   ├── Calculator
 │   │   │   ├── AffinityCalculator.tsx
 │   │   │   ├── AffinityResult.tsx
@@ -89,6 +90,7 @@
 │   │   ├── zh-CN.json
 │   │   └── zh-TW.json
 │   ├── types
+│   │   ├── extraResources.ts
 │   │   ├── features.ts
 │   │   └── globals.d.ts
 │   └── utils
@@ -96,4 +98,4 @@
 ├── tailwind.config.ts
 └── tsconfig.json
 
-19 directories, 78 files
+19 directories, 80 files

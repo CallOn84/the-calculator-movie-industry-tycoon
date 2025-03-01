@@ -16,7 +16,7 @@ type BudgetRadioProps = {
 };
 
 const getBudgetColorClass = (isSelected: boolean): string =>
-  isSelected ? "bg-blue-500 text-white border-blue-500" : "bg-gray-300 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-400 dark:border-gray-600";
+  isSelected ? "bg-blue-500 text-white border-blue-500" : "bg-gray-300 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800";
 
 const BudgetRadio: React.FC<BudgetRadioProps> = ({ label, selectedValue, onChange }) => {
   const { translations: t } = useLanguage();
@@ -40,7 +40,7 @@ const BudgetRadio: React.FC<BudgetRadioProps> = ({ label, selectedValue, onChang
             <button
               key={option.value}
               type="button"
-              className={`w-full px-4 py-2 rounded font-bold border transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2 ${getBudgetColorClass(isSelected)}`}
+              className={`w-full px-4 py-2 rounded-lg font-medium border transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2 ${getBudgetColorClass(isSelected)}`}
               onClick={() => onChange(option.value)}
               aria-selected={isSelected}
               aria-label={option.label}

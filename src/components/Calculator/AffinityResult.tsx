@@ -6,8 +6,8 @@ import { useLanguage } from "@/context/LanguageContext";
 import BaseScoreResult from "./BaseScoreResult";
 import SeasonalResults from "./SeasonalResults";
 import ProductionResult from "./ProductionResult";
-import ExtraResources from "./ExtraResources";
-import { ExtraResource } from "@/types/extraResources"; // ✅ Importação correta
+import RandomMovieButton from "@/components/Buttons/RandomMovieButton";
+import { ExtraResource } from "@/types/extraResources";
 
 export type SeasonResult = {
   season: string;
@@ -86,6 +86,11 @@ const AffinityResult: React.FC<AffinityResultProps> = ({
         theme={theme}
         rating={rating}
       />
+
+      {/* Componente para sugestão de título com base no gênero e tema selecionados */}
+      <RandomMovieButton genre={genre1} theme={theme} genre2={genre2} />
+
+      <div className="border-t border-gray-200 dark:border-gray-700 w-full my-1"></div>
 
       {production && postProduction && (
         <ProductionResult

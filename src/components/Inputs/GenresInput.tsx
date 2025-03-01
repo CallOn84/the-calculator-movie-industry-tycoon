@@ -78,7 +78,7 @@ const GenresInput = ({
       {/* Componente de seleção acessível */}
       <Select.Root value={value} onValueChange={handleValueChange}>
         <Select.Trigger
-          className="w-full flex items-center justify-between px-3 py-2 border rounded-md shadow-sm bg-white dark:bg-formBackgroundDark text-gray-900 dark:text-darkForeground border-gray-300 dark:border-formBorderDark transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
+          className="w-full flex items-center justify-between px-3 py-2 border rounded-lg shadow-sm bg-white dark:bg-formBackgroundDark text-gray-900 dark:text-darkForeground border-gray-300 dark:border-formBorderDark transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
           aria-labelledby={`label-${name}`}
           role="combobox"
           aria-expanded="false"
@@ -91,7 +91,7 @@ const GenresInput = ({
 
         <Select.Portal>
           <Select.Content
-            className="z-50 bg-white dark:bg-formBackgroundDark rounded-md shadow-lg border border-gray-200 dark:border-formBorderDark"
+            className="z-50 bg-white dark:bg-formBackgroundDark rounded-lg shadow-lg border border-gray-200 dark:border-formBorderDark"
             role="listbox"
           >
             <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-white dark:bg-formBackgroundDark">
@@ -103,7 +103,7 @@ const GenresInput = ({
               {isOptional && (
                 <Select.Item
                   value="unselected"
-                  className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                  className="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   role="option"
                 >
                   <Select.ItemText>{t.clearSelection}</Select.ItemText>
@@ -115,7 +115,7 @@ const GenresInput = ({
                 <Select.Item
                   key={option.genre}
                   value={option.genre}
-                  className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
+                  className="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
                   role="option"
                   aria-labelledby={`option-${option.genre}`}
                 >
