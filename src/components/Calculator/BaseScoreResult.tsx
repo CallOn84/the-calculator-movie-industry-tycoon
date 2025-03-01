@@ -13,15 +13,10 @@ type BaseScoreResultProps = {
 };
 
 const getScoreBgColor = (score: number): string => {
-  if (score < 1.5) return "bg-red-500";
-  if (score < 2.5) return "bg-yellow-400";
-  if (score < 3.5) return "bg-blue-500";
-  return "bg-green-500";
-};
-
-const getTextColor = (score: number): string => {
-  if (score >= 1.5 && score < 2.5) return "text-gray-900";
-  return "text-white";
+  if (score < 1.5) return "bg-red-200 text-red-900 dark:bg-red-300";
+  if (score < 2.5) return "bg-yellow-200 text-yellow-900 dark:bg-yellow-300";
+  if (score < 3.5) return "bg-blue-200 text-blue-900 dark:bg-blue-300";
+  return "bg-green-200 text-green-900 dark:bg-green-300";
 };
 
 const BaseScoreResult: React.FC<BaseScoreResultProps> = ({
@@ -78,7 +73,7 @@ const BaseScoreResult: React.FC<BaseScoreResultProps> = ({
       <span
         className={`text-xl px-2 py-1 rounded ${getScoreBgColor(
           result
-        )} ${getTextColor(result)}`}
+        )}`}
       >
         <strong>{getAffinityLabel(result)}</strong>{" "}
         <span className="text-xs">(Score: {result.toFixed(2)})</span>

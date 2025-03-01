@@ -45,9 +45,9 @@ const AgeRatingRadio: React.FC<AgeRatingRadioProps> = ({
           <button
             key={option.value}
             type="button"
-            className={`flex-1 px-4 py-2 rounded font-bold border transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2 ${selectedValue === option.value
-                ? `${getColorClass(option.value)} border-${option.value.toLowerCase()}-500`
-                : "bg-gray-300 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-400 dark:border-gray-600"
+            className={`flex-1 px-4 py-2 rounded-lg font-medium border transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2 ${selectedValue === option.value
+              ? `${getColorClass(option.value)} border-${option.value.toLowerCase()}-500`
+              : "bg-gray-300 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800"
               }`}
             onClick={() => onChange(option.value)}
           >

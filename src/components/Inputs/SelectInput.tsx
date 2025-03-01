@@ -54,7 +54,7 @@ const SelectInput = ({
       </label>
       <Select.Root value={value} onValueChange={handleValueChange}>
         <Select.Trigger
-          className="w-full flex items-center justify-between px-3 py-2 border rounded-md shadow-sm bg-white dark:bg-formBackgroundDark text-gray-900 dark:text-darkForeground border-gray-300 dark:border-formBorderDark transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
+          className="w-full flex items-center justify-between px-3 py-2 border rounded-lg shadow-sm bg-white dark:bg-formBackgroundDark text-gray-900 dark:text-darkForeground border-gray-300 dark:border-formBorderDark transition-all duration-200 focus:outline-none focus:ring focus:ring-offset-2"
           aria-label={label}
         >
           <Select.Value placeholder={t.select} />
@@ -63,7 +63,7 @@ const SelectInput = ({
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content className="z-50 bg-white dark:bg-formBackgroundDark rounded-md shadow-lg border border-gray-200 dark:border-formBorderDark">
+          <Select.Content className="z-50 bg-white dark:bg-formBackgroundDark rounded-lg shadow-lg border border-gray-200 dark:border-formBorderDark">
             <Select.ScrollUpButton className="flex items-center justify-center h-6 bg-white dark:bg-formBackgroundDark text-gray-500 cursor-default">
               <ChevronDownIcon />
             </Select.ScrollUpButton>
@@ -71,7 +71,7 @@ const SelectInput = ({
               {isOptional && (
                 <Select.Item
                   value="unselected"
-                  className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
+                  className="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
                 >
                   <Select.ItemText>{t.clearSelection}</Select.ItemText>
                 </Select.Item>
@@ -80,7 +80,7 @@ const SelectInput = ({
                 <Select.Item
                   key={option}
                   value={option}
-                  className="flex items-center px-3 py-2 text-sm rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
+                  className="flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-600"
                 >
                   <Select.ItemText>{getTranslatedOption(option)}</Select.ItemText>
                   <Select.ItemIndicator className="ml-auto">

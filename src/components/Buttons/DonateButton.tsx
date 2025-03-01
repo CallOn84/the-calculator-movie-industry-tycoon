@@ -1,33 +1,37 @@
+// src/components/Buttons/DonateButton.tsx
 "use client";
 
-import Script from "next/script";
+import React from "react";
+import { useLanguage } from "@/context/LanguageContext";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export default function DonateButton() {
-  const handlePaypalLoad = () => {
-    if (typeof window !== "undefined" && window.PayPal) {
-      window.PayPal.Donation.Button({
-        env: "production",
-        hosted_button_id: "VSA6WY3VHC43L",
-        image: {
-          src: "https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif",
-          alt: "Donate with PayPal button",
-          title: "PayPal - The safer, easier way to pay online!",
-        },
-      }).render("#donate-button");
-    }
+  const { translations: t } = useLanguage();
+
+  const handleClick = () => {
+    // Dispara evento de checkout iniciado
+    sendGTMEvent({
+      event: "user_interaction",
+      event_name: "checkout_initiated",
+      interaction_type: "donate_click",
+    });
   };
 
   return (
-    <>
-      <div id="donate-button-container" className="mt-8">
-        <div id="donate-button"></div>
-      </div>
-      <Script
-        id="paypal-donate-sdk"
-        src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js"
-        strategy="afterInteractive"
-        onLoad={handlePaypalLoad}
-      />
-    </>
+    <div className="mt-8 relative">
+      <a
+        href={t.donateLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleClick}
+        aria-label={t.donateAriaLabel}
+        title={t.donateTitle}
+        className="flex items-center justify-center w-full h-full py-2 px-6 bg-yellow-400 rounded-lg hover:bg-yellow-300 transition-colors duration-200 focus:outline-none focus:ring focus:ring-offset-2"
+      >
+        <span className="text-lg font-semibold text-yellow-900">
+          {t.donateText} <span role="img" aria-label={t.coffeeEmojiLabel}>☕️</span>
+        </span>
+      </a>
+    </div>
   );
 }
