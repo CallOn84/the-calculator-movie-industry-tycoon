@@ -13,6 +13,7 @@ import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import DonateButton from "@/components/Buttons/DonateButton";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <LanguageProvider>
             <header className="flex justify-end items-center p-4 space-x-4">
+              <DonateButton />
               <LanguageSelector />
               <ThemeToggle />
               <GitHubLink />
