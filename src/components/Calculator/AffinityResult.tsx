@@ -90,7 +90,7 @@ const AffinityResult: React.FC<AffinityResultProps> = ({
       {/* Componente para sugestão de título com base no gênero e tema selecionados */}
       <RandomMovieButton genre={genre1} theme={theme} genre2={genre2} />
 
-      <div className="border-t border-gray-200 dark:border-gray-700 w-full my-1"></div>
+      <div className="border-t border-gray-200 dark:border-gray-600 w-full my-1"></div>
 
       {production && postProduction && (
         <ProductionResult
