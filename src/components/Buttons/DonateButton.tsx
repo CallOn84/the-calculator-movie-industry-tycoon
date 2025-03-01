@@ -20,7 +20,7 @@ export default function DonateButton() {
   return (
     <div className="mt-8 relative">
       <a
-        href="https://www.paypal.com/donate/?hosted_button_id=VSA6WY3VHC43L"
+        href={t.donateLink}
         target="_blank"
         rel="noopener noreferrer"
         onClick={handleClick}
