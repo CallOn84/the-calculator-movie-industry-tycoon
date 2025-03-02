@@ -1,8 +1,8 @@
-// src/app/hooks/useRandomMovieTitle.ts
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import themeMappingData from "@/data/theme-id-tmdb.json";
 
+// Mapeamento de gêneros para IDs do TMDB
 const genreMapping: Record<string, number> = {
   action: 28,
   adventure: 12,
@@ -21,6 +21,7 @@ const genreMapping: Record<string, number> = {
   thriller: 53,
 };
 
+// Mapeamento de idiomas do app para idiomas do TMDB
 const tmdbLanguageMapping: Record<string, string> = {
   en: "en-US",
   pt: "pt-BR",
@@ -34,6 +35,11 @@ const tmdbLanguageMapping: Record<string, string> = {
   tr: "tr-TR",
 };
 
+// (Opcional) cache simples em memória, para não repetir chamadas
+// para os mesmos parâmetros (genre1, genre2, theme, locale).
+// Em produção, você pode usar localStorage ou algo mais robusto.
+const discoverCache = new Map<string, any>();
+
 export const useRandomMovieTitle = (
   genre1: string,
   locale: string,
@@ -46,11 +52,9 @@ export const useRandomMovieTitle = (
   const [fetchedLocale, setFetchedLocale] = useState<string>(""); // idioma com o qual o filme foi obtido
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState<number>(0);
-  const MAX_RETRIES = 3;
-  const [desiredKeywordId, setDesiredKeywordId] = useState<number | null>(null);
 
   const randomizeTitle = async () => {
+    // Validações iniciais
     if (!genre1) {
       setError(t.noGenreSelected);
       return;
@@ -85,7 +89,7 @@ export const useRandomMovieTitle = (
       const tmdbLocale = tmdbLanguageMapping[locale] || "en-US";
       const desiredLangPrefix = tmdbLocale.split("-")[0].toLowerCase();
 
-      // Obtenção do ID da keyword a partir do arquivo de mapeamento
+      // Obtém ID da keyword a partir do mapeamento local
       const themeIds: Record<string, number> = themeMappingData["theme-tmdb"]["items-id"];
       const lowerTheme = theme.toLowerCase();
       if (!themeIds[lowerTheme]) {
@@ -94,32 +98,46 @@ export const useRandomMovieTitle = (
         return;
       }
       const keywordId = themeIds[lowerTheme];
-      setDesiredKeywordId(keywordId);
-      const withKeywordsParam = `&with_keywords=${keywordId}`;
 
-      // Consulta Discover: obtém o total de páginas com os filtros (gêneros + tema)
-      const initialRes = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}` +
+      // Monta URL base do discover
+      const baseDiscoverUrl = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}` +
         `&with_genres=${genreIds.join(",")}` +
-        `&language=${tmdbLocale}${withKeywordsParam}`
-      );
-      const initialData = await initialRes.json();
-      const totalPages = Math.min(initialData.total_pages || 1, 500);
+        `&language=${tmdbLocale}` +
+        `&with_keywords=${keywordId}`;
+
+      // Checa cache
+      const cacheKey = `${genreIds.join(",")}-${tmdbLocale}-${keywordId}`;
+      let totalPages = 0;
+
+      if (discoverCache.has(cacheKey)) {
+        // Se já temos no cache, basta reutilizar
+        totalPages = discoverCache.get(cacheKey).totalPages;
+      } else {
+        // Faz a primeira requisição para descobrir o total de páginas
+        const initialRes = await fetch(baseDiscoverUrl);
+        const initialData = await initialRes.json();
+
+        // total_pages do TMDB costuma ir até 500
+        totalPages = Math.min(initialData.total_pages || 1, 500);
+
+        // Armazena no cache
+        discoverCache.set(cacheKey, { totalPages });
+      }
+
+      // Seleciona uma página aleatória
       const randomPage = Math.floor(Math.random() * totalPages) + 1;
+      const discoverUrlWithPage = `${baseDiscoverUrl}&page=${randomPage}`;
 
-      // Consulta Discover para obter filmes na página sorteada
-      const res = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}` +
-        `&with_genres=${genreIds.join(",")}` +
-        `&page=${randomPage}` +
-        `&language=${tmdbLocale}${withKeywordsParam}`
-      );
+      // Busca os resultados da página aleatória
+      const res = await fetch(discoverUrlWithPage);
       const data = await res.json();
+
+      // Verifica se há resultados
       if (data.results && data.results.length > 0) {
-        // Filtra candidatos que possuam a propriedade "title"
+        // Filtra para garantir que cada item tenha título
         let candidates = data.results.filter((item: any) => item.title);
 
-        // Se dois gêneros foram selecionados, filtra para manter somente filmes que contenham ambos
+        // Se dois gêneros foram selecionados, filtra localmente (TMDB já filtra, mas por segurança).
         if (mapping2) {
           candidates = candidates.filter(
             (item: any) =>
@@ -129,37 +147,27 @@ export const useRandomMovieTitle = (
           );
         }
 
-        // Para cada candidato, confirma que o filme possui a keyword desejada
-        const filteredCandidates = [];
-        for (const candidate of candidates) {
-          const kwRes = await fetch(
-            `https://api.themoviedb.org/3/movie/${candidate.id}/keywords?api_key=${API_KEY}`
-          );
-          const kwData = await kwRes.json();
-          const keywords = kwData.keywords || [];
-          if (keywords.some((kw: any) => kw.id === keywordId)) {
-            filteredCandidates.push(candidate);
-          }
-        }
-        candidates = filteredCandidates;
+        // (Removido) Não precisamos mais checar as keywords uma a uma,
+        // pois usamos o parâmetro &with_keywords=ID.
 
-        // Filtro extra: aceitar somente candidatos cujo título foi traduzido para o idioma desejado.
+        // Filtro extra: aceitar somente candidatos que tenham tradução no idioma desejado
         candidates = candidates.filter((item: any) => {
-          // Se o filme é originalmente do idioma desejado, aceita
+          // Se o filme é originalmente do idioma desejado, ok
           if (item.original_language.toLowerCase() === desiredLangPrefix) {
             return true;
           }
-          // Caso contrário, aceita somente se o título foi traduzido (title diferente de original_title)
+          // Senão, só aceita se o title != original_title (ou seja, traduzido)
           return item.title !== item.original_title;
         });
 
         if (candidates.length > 0) {
+          // Escolhe um candidato aleatório
           const randomIndex = Math.floor(Math.random() * candidates.length);
           const selectedMovie = candidates[randomIndex];
+
           setMovieId(selectedMovie.id);
           setMovieTitle(selectedMovie.title);
           setFetchedLocale(tmdbLocale);
-          setRetryCount(0);
         } else {
           setError(t.noMovieFoundAllFilters);
         }
@@ -170,11 +178,12 @@ export const useRandomMovieTitle = (
       console.error(err);
       setError(t.errorFetchingMovie);
     }
+
     setLoading(false);
   };
 
-  // Atualiza o título do filme quando o idioma é alterado,
-  // garantindo que o filme seja exibido no idioma desejado.
+  // Quando o idioma muda, tenta atualizar o título do mesmo filme
+  // (se já houver um movieId).
   useEffect(() => {
     const updateTitleForLocale = async () => {
       if (movieId) {
@@ -182,7 +191,7 @@ export const useRandomMovieTitle = (
         const tmdbLocale = tmdbLanguageMapping[locale] || "en-US";
         const desiredLangPrefix = tmdbLocale.split("-")[0].toLowerCase();
 
-        // Se o filme já foi obtido no idioma desejado, não precisa atualizar.
+        // Se o filme já está no idioma desejado, não refaz requisição
         if (fetchedLocale === tmdbLocale) return;
 
         try {
@@ -192,27 +201,15 @@ export const useRandomMovieTitle = (
           );
           const data = await res.json();
           if (data && data.title) {
+            // Se não houver título traduzido, avisa erro
             if (
               data.title === data.original_title &&
               data.original_language.toLowerCase() !== desiredLangPrefix
             ) {
               setError(t.noTranslatedTitleFound);
             } else {
-              // Opcional: confirmar que o filme mantém a keyword desejada
-              if (desiredKeywordId) {
-                const kwRes = await fetch(
-                  `https://api.themoviedb.org/3/movie/${movieId}/keywords?api_key=${API_KEY}`
-                );
-                const kwData = await kwRes.json();
-                const keywords = kwData.keywords || [];
-                if (!keywords.some((kw: any) => kw.id === desiredKeywordId)) {
-                  setError(t.noTranslatedTitleFound);
-                  return;
-                }
-              }
               setMovieTitle(data.title);
               setFetchedLocale(tmdbLocale);
-              setRetryCount(0);
             }
           }
         } catch (err) {
