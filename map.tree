@@ -17,16 +17,21 @@
 │   │   ├── api
 │   │   │   └── affinities
 │   │   │       └── route.ts
+│   │   ├── cancelledcoffee
+│   │   │   └── page.tsx
 │   │   ├── favicon.ico
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   ├── page.tsx
+│   │   ├── paidcoffee
+│   │   │   └── page.tsx
 │   │   └── privacy-policy
 │   │       └── page.tsx
 │   ├── components
 │   │   ├── Buttons
 │   │   │   ├── ClearButton.tsx
-│   │   │   └── DonateButton.tsx
+│   │   │   ├── DonateButton.tsx
+│   │   │   └── RandomMovieButton.tsx
 │   │   ├── Calculator
 │   │   │   ├── AffinityCalculator.tsx
 │   │   │   ├── AffinityResult.tsx
@@ -50,11 +55,13 @@
 │   │   │   ├── ValentineIcon.tsx
 │   │   │   └── WorldCupIcon.tsx
 │   │   ├── Inputs
+│   │   │   ├── AccessibleTextField.tsx
 │   │   │   ├── AgeRatingRadio.tsx
 │   │   │   ├── BudgetRadio.tsx
 │   │   │   ├── GenresInput.tsx
 │   │   │   └── SelectInput.tsx
 │   │   ├── LanguageSelector.tsx
+│   │   ├── Modal.tsx
 │   │   ├── ThemeToggle.tsx
 │   │   └── analytics
 │   │       ├── GoogleAnalytics.tsx
@@ -71,13 +78,15 @@
 │   │   ├── rating.json
 │   │   ├── script-affinity.json
 │   │   ├── seasons.json
+│   │   ├── theme-id-tmdb.json
 │   │   └── theme.json
 │   ├── hooks
 │   │   ├── useCalculateAffinity.ts
 │   │   ├── useCalculateExtraResources.ts
 │   │   ├── useCalculateProduction.ts
 │   │   ├── useFormTracking.ts
-│   │   └── useGtag.ts
+│   │   ├── useGtag.ts
+│   │   └── useRandomMovieTitle.ts
 │   ├── locales
 │   │   ├── de.json
 │   │   ├── en.json
@@ -98,4 +107,4 @@
 ├── tailwind.config.ts
 └── tsconfig.json
 
-19 directories, 80 files
+21 directories, 87 files
