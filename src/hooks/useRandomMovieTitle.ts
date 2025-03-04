@@ -1,3 +1,5 @@
+//src/hooks/useRandomMovieTitle.ts
+
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import themeMappingData from "@/data/theme-id-tmdb.json";
