@@ -47,15 +47,15 @@ const GenresInput = ({
   const getScoreBgColor = (label: string): string => {
     switch (label.toLowerCase()) {
       case (t as unknown as Record<string, string>).bad.toLowerCase():
-        return "bg-red-500"; // Ruim 🔴
+        return "bg-red-500";
       case (t as unknown as Record<string, string>).medium.toLowerCase():
-        return "bg-yellow-400"; // Neutro 🟡
+        return "bg-yellow-400";
       case (t as unknown as Record<string, string>).good.toLowerCase():
-        return "bg-blue-500"; // Bom 🔵
+        return "bg-blue-500";
       case (t as unknown as Record<string, string>).great.toLowerCase():
-        return "bg-green-500"; // Excelente 🟢
+        return "bg-green-500";
       default:
-        return "bg-gray-300"; // Sem afinidade ⚪
+        return "bg-gray-300";
     }
   };
 
