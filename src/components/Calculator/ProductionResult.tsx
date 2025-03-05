@@ -50,14 +50,14 @@ const ProductionResult: React.FC<ProductionResultProps> = ({ production, postPro
   const getAffinityColor = (affinity: number): string => {
     switch (affinity) {
       case 3:
-        return "bg-green-500"; // 🟢 Afinidade 3
+        return "bg-green-500"; // Afinidade 3
       case 2:
-        return "bg-blue-500"; // 🔵 Afinidade 2
+        return "bg-blue-500"; // Afinidade 2
       case 1:
-        return "bg-yellow-500"; // 🟡 Afinidade 1
+        return "bg-yellow-500"; // Afinidade 1
       case 0:
       default:
-        return "bg-red-500"; // 🔴 Afinidade 0
+        return "bg-red-500"; // Afinidade 0
     }
   };
 

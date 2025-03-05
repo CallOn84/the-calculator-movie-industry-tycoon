@@ -1,5 +1,4 @@
 // src/types/extraResources.ts
-
 export interface ExtraResource {
   id: string;
   nameKey: string;
@@ -9,7 +8,7 @@ export interface ExtraResource {
   complexity: number; // Complexidade do recurso
   planningReqs: Record<string, number>; // Requisitos mínimos para planejamento
   sortPriority: number; // Ordem de exibição dos recursos
-  affinityLevel: number; // 🔹 Adicionado para armazenar a afinidade do recurso com o tema
+  affinityLevel: number; // Adicionado para armazenar a afinidade do recurso com o tema
 }
 
 export interface ExtraResourcesResult {

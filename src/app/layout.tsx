@@ -1,4 +1,4 @@
-// src/app/layout.tsx
+//src/app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -19,27 +19,27 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.calcmovietycoon.com/'),
-  title: 'The Calculator - Movie Industry Tycoon',
+  title: 'The Calculator for Movie Industry Tycoon',
   description: 'Calculate movie affinities for The Executive: Movie Industry Tycoon. Optimize your film production strategy with our advanced calculator.',
   keywords: 'movie industry, tycoon, calculator, film production, affinity, strategy',
   openGraph: {
     siteName: 'Movie Industry Calculator',
     url: 'https://www.calcmovietycoon.com/',
-    title: 'The Calculator - Movie Industry Tycoon',
+    title: 'The Calculator for Movie Industry Tycoon',
     description: 'Optimize your film production strategy with our advanced calculator for The Executive: Movie Industry Tycoon.',
     images: [
       {
         url: '/og-image.webp',
         width: 650,
         height: 365,
-        alt: 'The Calculator - Movie Industry Tycoon'
+        alt: 'The Calculator for Movie Industry Tycoon'
       }
     ],
     type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'The Calculator - Movie Industry Tycoon',
+    title: 'The Calculator for Movie Industry Tycoon',
     description: 'Optimize your film production strategy with our advanced calculator for The Executive: Movie Industry Tycoon.',
     images: ['/og-image.webp'],
     site: '@GoblinzPub'
@@ -65,6 +65,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GoogleTagManager />
         <MicrosoftClarity />
         <link rel="canonical" href="https://www.calcmovietycoon.com/" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#1f2937" />
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="Calculator Tycoon" />
       </head>
       <body className={inter.className}>
         {/* Skip link para navegação por teclado */}
